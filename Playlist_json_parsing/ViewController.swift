@@ -9,6 +9,10 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    let networkService = NetworkService()
+    var searchResponce: SearchResponse? = nil
+    private var timer: Timer?
+    
     @IBOutlet weak var table: UITableView!
     let seacrhController = UISearchController(searchResultsController: nil)
     
@@ -18,21 +22,6 @@ class ViewController: UIViewController {
         
         setupSearchBar()
         setupTableView()
-        
-        let urlString = "https://itunes.apple.com/search?term=jack+johnson&limit=25"
-        guard let url = URL(string: urlString) else {return}
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            DispatchQueue.main.async {
-                if let error = error {
-                    print(error)
-                    return
-                }
-                
-                guard let data = data else {return}
-                let someString = String(data: data, encoding: .utf8)
-                print(someString ?? "no data")
-            }
-        }.resume()
     }
     
     private func setupSearchBar() {
@@ -52,18 +41,33 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return searchResponce?.results.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = table.dequeueReusableCell(withIdentifier: "cell",for: indexPath)
-        cell.textLabel?.text = "123"
+        if let track = searchResponce?.results[indexPath.row] {
+        cell.textLabel?.text = ("\(track.artistName)  \(track.trackName)")
+        }
         return cell
     }
 }
 
 extension ViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
+        let urlString = "https://itunes.apple.com/search?term=\(searchText)&limit=10"
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { [self] _ in
+            networkService.request(urlString: urlString) { [weak self] result in
+                switch result {
+                case .success(let searchResponse):
+                    self?.searchResponce = searchResponse
+                    self?.table.reloadData()
+                    
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        })
     }
 }
