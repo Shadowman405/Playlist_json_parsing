@@ -9,20 +9,20 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let networkService = NetworkService()
+    let networkDataFetcher = NetworkDataFetcher()
     var searchResponce: SearchResponse? = nil
     private var timer: Timer?
-    
-    @IBOutlet weak var table: UITableView!
     let seacrhController = UISearchController(searchResultsController: nil)
     
-
+    
+    @IBOutlet weak var table: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupSearchBar()
         setupTableView()
     }
+    
     
     private func setupSearchBar() {
         navigationItem.searchController = seacrhController
@@ -36,8 +36,9 @@ class ViewController: UIViewController {
         table.dataSource = self
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
-
 }
+
+//MARK: - Extensions
 
 extension ViewController: UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -58,15 +59,10 @@ extension ViewController: UISearchBarDelegate {
         let urlString = "https://itunes.apple.com/search?term=\(searchText)&limit=10"
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { [self] _ in
-            networkService.request(urlString: urlString) { [weak self] result in
-                switch result {
-                case .success(let searchResponse):
-                    self?.searchResponce = searchResponse
-                    self?.table.reloadData()
-                    
-                case .failure(let error):
-                    print(error)
-                }
+            networkDataFetcher.fetchTracks(urlString: urlString) { searchResponse in
+                guard let searchResponce = searchResponse else {return}
+                self.searchResponce = searchResponce
+                self.table.reloadData()
             }
         })
     }

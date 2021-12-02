@@ -15,6 +15,7 @@
 		BFC04A8D2759539900558254 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFC04A8B2759539900558254 /* LaunchScreen.storyboard */; };
 		BFC04A952759591500558254 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC04A942759591500558254 /* Model.swift */; };
 		BFC04A982759608100558254 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC04A972759608100558254 /* NetworkService.swift */; };
+		BFC04A9B2759672300558254 /* NetworkDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC04A9A2759672300558254 /* NetworkDataFetcher.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		BFC04A8E2759539900558254 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BFC04A942759591500558254 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		BFC04A972759608100558254 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		BFC04A9A2759672300558254 /* NetworkDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDataFetcher.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,11 +62,11 @@
 		BFC04A7F2759539700558254 /* Playlist_json_parsing */ = {
 			isa = PBXGroup;
 			children = (
+				BFC04A992759616500558254 /* Networking */,
 				BFC04A96275959DA00558254 /* Model */,
 				BFC04A802759539700558254 /* AppDelegate.swift */,
 				BFC04A842759539700558254 /* ViewController.swift */,
 				BFC04A822759539700558254 /* SceneDelegate.swift */,
-				BFC04A992759616500558254 /* Networking */,
 				BFC04A862759539700558254 /* Main.storyboard */,
 				BFC04A892759539900558254 /* Assets.xcassets */,
 				BFC04A8B2759539900558254 /* LaunchScreen.storyboard */,
@@ -85,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				BFC04A972759608100558254 /* NetworkService.swift */,
+				BFC04A9A2759672300558254 /* NetworkDataFetcher.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -159,6 +162,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFC04A9B2759672300558254 /* NetworkDataFetcher.swift in Sources */,
 				BFC04A982759608100558254 /* NetworkService.swift in Sources */,
 				BFC04A852759539700558254 /* ViewController.swift in Sources */,
 				BFC04A812759539700558254 /* AppDelegate.swift in Sources */,
